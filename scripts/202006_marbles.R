@@ -1,73 +1,111 @@
 ## Marble races
 ## Load packages ####
 library(tidyverse)
-library(emojifont)
-
-# names(marbles)
+library(gganimate)
+library(extrafont)
 
 ## Read in the data ####
 marbles <- read.csv("../data/202006_marbles.csv",
                     header = T,
-                    stringsAsFactors = F) 
-
-hosts <- unique(subset(marbles, marbles$Host. == "Yes")$Marble.Name)
-
-marbles <- marbles %>%
-  mutate(Hosted = as.factor(ifelse(Marble.Name %in% hosts, 
-                                   "Has hosted", 
-                                   "Has never hosted"))) %>%
-  
+                    stringsAsFactors = F) %>%
+  mutate(Date = lubridate::dmy(Date)) %>%
+  mutate(Race = fct_reorder(as.factor(Race), Date)) %>%
   group_by(Race) %>%
   mutate(Rank = rank(Time..s., ties.method = "average")) %>%
-  mutate(Alpha.Name = rank(Marble.Name)) %>%
   ungroup() %>%
   group_by(Marble.Name) %>%
-  mutate(Mean.Rank = mean(Rank), na.rm = T)
+  mutate(Cumul.Rank = cumsum(Rank - 15)) %>% 
+  # Reversing for visualisation, leaving 1 for slowest marble
+  mutate(Reg.Rank = cumsum(Rank - 8)) %>%
+  mutate(Mean.Reg.Rank = mean(Reg.Rank)) %>%
+  ungroup() 
 
-# Plot it
-ggplot(subset(marbles, Marble.Name %in% hosts)) +
-  # plotting line first, so dots are seen on top of it
-  geom_hline(yintercept = 1.1, colour = "white", linetype = "dashed", size = 2) + 
-  geom_jitter(aes(x = Marble.Name, y = Rank, fill = Marble.Name, colour = Host.),
-              shape = 21, width = 0, height = 0.3, alpha = 0.5, size = 3, stroke = 1.5) +
+marblesInOrder <- marbles %>% 
+  mutate(Marble.Name = fct_reorder(as.factor(Marble.Name), Mean.Reg.Rank))
+
+## Plot it ####
+### Set colours per marble ####
+marbleColours <- rainbow(length(unique(marblesInOrder$Marble.Name))) 
+names(marbleColours) <- levels(as.factor(marblesInOrder$Marble.Name))
+
+### Create custom theme emphasising marble of interest ####
+theme_marbletastic <- function() {
+  theme_dark() %+replace%
+    theme(plot.background = element_rect(fill = "black"),
+          panel.grid = element_line(color = "grey10"),
+          panel.background = element_rect(fill = "black", colour = NA),
+          legend.background = element_rect(fill = "black"),
+          plot.title = element_text(hjust = 0, size = 16),
+          text = element_text(colour = marbleColours[["Prim"]],
+                              family = "Impact"), 
+          axis.text.x = element_blank(),
+          axis.text.y = element_text(color = marbleColours[["Prim"]]),
+          axis.ticks = element_blank(),
+          legend.justification= "left",
+          legend.key = element_rect(fill = "black"),
+          plot.caption = element_text(size = 8)) 
+}
+
+### MetaRace Plot ####
+metaRace <- ggplot(marbles) +
+  geom_hline(yintercept = min(marbles$Cumul.Rank), 
+             colour = "white", linetype = "dashed", size = 1.5) + 
+  geom_point(aes(x = Marble.Name, y =  Cumul.Rank, fill = Marble.Name),
+             colour = "grey15", shape = 21, alpha = 0.9, size = 3, stroke = 1) +
+  geom_segment(aes(x=Marble.Name, xend = Marble.Name, 
+                   y = max(Cumul.Rank), yend = Cumul.Rank, 
+                   colour = Marble.Name), alpha = 0.3, size = 2) +
   scale_y_reverse() +
-
-  ylab("Finishing Place") +
-  xlab("Marble Name") +
   coord_flip() +
-  scale_fill_manual(values = rainbow(length(hosts)),
+  scale_fill_manual(values = marbleColours,
                     guide = F) +
-  scale_colour_manual(labels = c("", "Host"), 
-                      values = c("black", "white"))+
-  labs(title = "How to psych up your marbles\n", 
-       x = "Marble Name", y = "Finishing Place", color = "") +
-  theme_dark() +
-  ggtitle(label = "How to psych your marbles", 
-          subtitle = "Don't host") +
-  theme(plot.background = element_rect(fill = "black"),
-        panel.background = element_rect(fill = "black"),
-        legend.background = element_rect(fill = "black"),
-        plot.title = element_text(color = "white"),
-      #  legend.title = element_text(size = 0),
-        legend.text = element_text(color = "grey30"),
-        axis.title  = element_text(color = "grey30"),
-    #    legend.position = "top", 
-        legend.justification= "left",
-        legend.key = element_rect(fill = "black"),
-        plot.caption = element_text(color = "white", size = 10)) 
-  
-  
-ggplot(marbles) +
-  geom_smooth(aes(x = Alpha.Name, y = Rank, colour = Hosted)) 
+  scale_colour_manual(values = marbleColours,
+                      guide = F) +
+  labs(title = "Prim, The Marvellous Marbela Marble", 
+       subtitle = "Winner of the meta race, look at him go!\n",
+       x = "", 
+       y = "Losing < --- Cumulative Finishing Place ---> Winning!\n\n", 
+       caption =  "#TidyTuesdays | @crthompson") +
+  theme_marbletastic() +
+  transition_states(Race, transition_length = 2, 
+                    state_length = 4, wrap = F) +
+  shadow_mark(alpha = 0.3) +
+  enter_fade() + 
+  exit_shrink() +
+  ease_aes('sine-in-out')
 
+anim_save(metaRace, filename = "../plots/202006_marbles1.gif",
+          width = 700, height = 500, end_pause = 8)
 
-theme(plot.background = element_rect(fill = "black"),
-#      panel.grid.major = element_line(color ="black"),
-      panel.background = element_rect(fill = "black"),
-      legend.background = element_rect(fill = "black"),
-      legend.title = element_text(color = "white", size = 14),
-      legend.text = element_text(color = "white", size = 14),
- #     legend.position = "top", 
-      legend.justification= "left",
-      legend.key = element_rect(fill = "black"),
-      plot.caption = element_text(color = "white", size = 10)) 
+### MeanReg Plot ####
+meanReg <- ggplot(marblesInOrder) +
+  geom_hline(yintercept = mean(marbles$Reg.Rank), colour = marbleColours[["Prim"]], 
+             linetype = "dashed", size = 1) + 
+  geom_point(aes(x = Marble.Name, y = Mean.Reg.Rank, colour = Marble.Name), 
+             colour = "grey30", shape = 124, alpha = 0.2, size = 4) +
+  geom_point(aes(x = Marble.Name, y = Reg.Rank, fill = Marble.Name),
+             shape = 21, alpha = 0.7, size = 4, stroke = 1) +
+  geom_segment(aes(x=Marble.Name, xend = Marble.Name, 
+                   y = Mean.Reg.Rank, yend = Reg.Rank, 
+                   colour = Marble.Name), alpha = 0.4, size = 2) +
+  scale_y_reverse() +
+  coord_flip() +
+  scale_fill_manual(values = marbleColours,
+                    guide = F) +
+  scale_colour_manual(values = marbleColours,
+                      guide = F) +
+  labs(title = "Prim, The Marvellous Marbela Marble", 
+       subtitle = "Always towards the front of the pack, he evades the regression to the mean!\n", 
+       x = "",
+       y = "Losing < --- Cumulative Place Relative To The Middle Of The Pack ---> Winning!\n\n", 
+       caption =  "#TidyTuesdays | @crthompson") +
+  theme_marbletastic() +
+  transition_states(Race, transition_length = 2, 
+                    state_length = 4, wrap = F) +
+  shadow_mark(alpha = 0.4) +
+  enter_fade() + 
+  exit_shrink() +
+  ease_aes('sine-in-out')
+
+anim_save(meanReg, filename = "../plots/202006_marbles2.gif",
+          width = 700, height = 500, end_pause = 8) 
