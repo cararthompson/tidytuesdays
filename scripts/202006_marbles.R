@@ -61,7 +61,7 @@ metaRace <- ggplot(marbles) +
                     guide = F) +
   scale_colour_manual(values = marbleColours,
                       guide = F) +
-  labs(title = "Prim, The Marvellous Marbela Marble", 
+  labs(title = "Prim, The Marvellous Marbula One Marble", 
        subtitle = "Winner of the meta race, look at him go!\n",
        x = "", 
        y = "Losing < --- Cumulative Finishing Place ---> Winning!\n\n", 
@@ -94,7 +94,7 @@ meanReg <- ggplot(marblesInOrder) +
                     guide = F) +
   scale_colour_manual(values = marbleColours,
                       guide = F) +
-  labs(title = "Prim, The Marvellous Marbela Marble", 
+  labs(title = "Prim, The Marvellous Marbula One Marble", 
        subtitle = "Always towards the front of the pack, he evades the regression to the mean!\n", 
        x = "",
        y = "Losing < --- Cumulative Place Relative To The Middle Of The Pack ---> Winning!\n\n", 
