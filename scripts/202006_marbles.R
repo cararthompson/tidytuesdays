@@ -8,16 +8,15 @@ library(extrafont)
 marbles <- read.csv("../data/202006_marbles.csv",
                     header = T,
                     stringsAsFactors = F) %>%
-  mutate(Date = lubridate::dmy(Date)) %>%
-  mutate(Race = fct_reorder(as.factor(Race), Date)) %>%
+  mutate(Date = lubridate::dmy(Date),
+         Race = fct_reorder(as.factor(Race), Date)) %>%
   group_by(Race) %>%
   mutate(Rank = rank(Time..s., ties.method = "average")) %>%
   ungroup() %>%
   group_by(Marble.Name) %>%
-  mutate(Cumul.Rank = cumsum(Rank - 15)) %>% 
-  # Reversing for visualisation, leaving 1 for slowest marble
-  mutate(Reg.Rank = cumsum(Rank - 8)) %>%
-  mutate(Mean.Reg.Rank = mean(Reg.Rank)) %>%
+  mutate(Cumul.Rank = cumsum(Rank - 15), # Reversing for visualisation, leaving 1 for slowest marble
+    Reg.Rank = cumsum(Rank - 8),
+    Mean.Reg.Rank = mean(Reg.Rank)) %>%
   ungroup() 
 
 marblesInOrder <- marbles %>% 

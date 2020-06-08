@@ -10,15 +10,15 @@ volcanoes <- read.csv("../data/202005_volcanoes.csv",
   select(Volcano.Name, Volcano.Number, Last.Known.Eruption, Longitude, Latitude) %>%
   mutate(Last.Year = ifelse(grepl("BCE", Last.Known.Eruption),
                             - as.numeric(str_extract(Last.Known.Eruption, "[0-9]+")),
-                            as.numeric(str_extract(Last.Known.Eruption, "[0-9]+")))) %>%
-  mutate(Last.Eruption.Century = as.integer(floor(Last.Year/100))) %>%
+                            as.numeric(str_extract(Last.Known.Eruption, "[0-9]+"))),
+         Last.Eruption.Century = as.integer(floor(Last.Year/100))) %>%
   arrange(Last.Eruption.Century) %>%               
   mutate(Last.Eruption.Century.Text = ifelse(Last.Eruption.Century < 0, 
                                              paste0(abs(Last.Eruption.Century), "00s BCE"),
-                                             paste0(Last.Eruption.Century, "00s CE"))) %>%
-  mutate(Last.Eruption.Century.Text = factor(Last.Eruption.Century.Text, 
-                                             levels = unique(Last.Eruption.Century.Text))) %>%
-  mutate(Extinct = factor(ifelse(is.na(Last.Eruption.Century), "Yes", "No"), 
+                                             paste0(Last.Eruption.Century, "00s CE")),
+         Last.Eruption.Century.Text = factor(Last.Eruption.Century.Text, 
+                                             levels = unique(Last.Eruption.Century.Text)),
+         Extinct = factor(ifelse(is.na(Last.Eruption.Century), "Yes", "No"), 
                           levels = c("No", "Yes")))
 
 # need two dataframes to keep the original points on the map in the animation
