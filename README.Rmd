@@ -7,6 +7,9 @@ output: github_document
 knitr::opts_chunk$set(echo = F)
 ```
 
+## 2020-07 - Coffee
+
+<a href='scripts/202007_coffee.R' target='_blank'><img src="plots/202007_coffee.png" align="center"/></a>
 
 ## 2020-06 #2 - Caribou
 
