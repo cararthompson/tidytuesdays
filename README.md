@@ -1,11 +1,15 @@
-Plots from \#TidyTuesdays
+My \#TidyTuesday contributions
 ================
+
+## 2020-07 - Astronauts
+
+<a href='scripts/202007b_astronauts.R' target='_blank'><img src="plots/202007b_astronauts.png" align="center"/></a>
 
 ## 2020-07 - Coffee
 
 <a href='scripts/202007_coffee.R' target='_blank'><img src="plots/202007_coffee.png" align="center"/></a>
 
-## 2020-06 \#2 - Caribou
+## 2020-06 - Caribou
 
 <a href='scripts/202006b_caribou.R' target='_blank'><img src="plots/202006b_caribou.gif" align="center"/></a>
 
