@@ -50,13 +50,9 @@ ferals <- tt_data$brisbane_complaints %>%
                              paste0(tolower(month.abb[1:12]), 
                                     sep = "|", collapse = "")),
          month = ifelse(grepl("1st-quarter", date_range), "jan", month),
-         quarter = recode(month, jan = "1st", apr = "2nd", jul = "3rd", oct = "4th"),
+         quarter_text = recode(month, jan = "1st", apr = "2nd", jul = "3rd", oct = "4th"),
          quarter = recode(month, jan = "Q1", apr = "Q2", jul = "Q3", oct = "Q4"),
          tidy_date = lubridate::yq(paste0(year, "-", quarter)))
-
-
-
-
 
 
 ## Plot it! ####
@@ -72,6 +68,20 @@ ggmap(get_stamenmap(bbox = c(min(ferals$lon) - .25,
   geom_point(data = ferals, 
              aes(x = lon, y = lat),
              alpha = 0.3, colour = "#52db16", size = 15) +
+  geom_text(data = ferals, 
+            aes(x = 152.9765, y = min(lat) - .421,
+                label = paste0("*Unidentified Feral Others\n\nReported to the RSPCA in\nthe ", 
+                               quarter_text, " quarter of ", year)), lineheight = .8,
+            family = "Arial Black", fontface = "bold",
+            colour = "black",
+            size = 7) +
+  geom_text(data = ferals, 
+            aes(x = 152.9755, y = min(lat) - .42,
+                label = paste0("*Unidentified Feral Others\n\nReported to the RSPCA in\nthe ", 
+                               quarter_text, " quarter of ", year)), lineheight = .8,
+            family = "Arial Black", fontface = "bold",
+            colour = "white",
+            size = 7) +
   geom_emoji(data = ferals, 
              aes(x = lon, y = lat, image = em)) +
   theme_map() +
@@ -89,16 +99,11 @@ ggmap(get_stamenmap(bbox = c(min(ferals$lon) - .25,
            colour = "white", 
            size = 11) +
   # adding text shadow
-  annotate("text", x = 152.9765, y = min(ferals$lat) - .421, lineheight = .8, 
-           label = paste0("*Unidentified Feral Others\n\nReported to the RSPCA in\nthe ", unique(ferals$quarter_text), " quarter of ", unique(ferals$year)),
-           family = "Arial Black", fontface = "bold",
-           colour = "black", 
-           size = 7) +
-  annotate("text", x = 152.9755, y = min(ferals$lat) - .42, lineheight = .8,
-           label = "*Unidentified Feral Others\n\nReported to the RSPCA in\nthe {quarter_text} quarter of {year}",
-           family = "Arial Black", fontface = "bold",
-           colour = "white", 
-           size = 7) +
+  # annotate("text", x = 152.9765, y = min(ferals$lat) - .421, lineheight = .8,
+  #          label = paste0("*Unidentified Feral Others\n\nReported to the RSPCA in\nthe ", quarter_text, " quarter of ", year),
+  #          family = "Arial Black", fontface = "bold",
+  #          colour = "black",
+  #          size = 7) +
   labs(caption = "#TidyTuesday | Graphic: @crthompson | Source: Brisbane Open Data - Animal Complaints") +
   transition_time(tidy_date) 
 
