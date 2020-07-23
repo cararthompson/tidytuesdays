@@ -103,7 +103,8 @@ ggmap(get_stamenmap(bbox = c(min(ferals$lon) - .25,
            colour = "white", 
            size = 11) +
   labs(caption = "#TidyTuesday | Graphic: @crthompson | Source: Brisbane Open Data - Animal Complaints") +
-  transition_time(tidy_date) 
+  transition_time(tidy_date) +
+  ease_aes('cubic-in-out')
 
 # Export to create making-of gif, adapting the approach used by Georgios Karamanis (@geokaramanis)
 ggsave(filename = file.path("../making-of/temp", paste0("202007c_ferals-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".png")), 
