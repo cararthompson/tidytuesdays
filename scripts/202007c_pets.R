@@ -2,26 +2,22 @@
 library(tidyverse)
 library(tidytuesdayR)
 library(ggmap)
-# devtools::install_github("dill/emoGG")
-#library(emoGG)
-# library(emojifont)
 library(ggimage)
-# library(grid)
 library(gganimate)
 library(ggthemes)
 library(extrafont)
 library(ggtext)
-# library(gridExtra)
 
 ## Get the data and tidy it for plotting ####
 tt_data <- tt_load(2020, week = 30)
-# readme(tt_data)
+readme(tt_data)
 
-# Data from here, 21/07/2020: https://www.corra.com.au/australian-postcode-location-data/
+# Geo data from here, 21/07/2020: https://www.corra.com.au/australian-postcode-location-data/
 geo <- read.csv("../data/202007c_animals.csv") %>%
   filter(state == "QLD") %>%
   distinct(suburb, .keep_all = TRUE) # where there are several postcodes by suburb, keep the first one only
 
+# Tidy, tidy, tidy!
 ferals <- tt_data$brisbane_complaints %>%
   filter(grepl("[Ff]eral", category)) %>%
   mutate(suburb = toupper(suburb)) %>% 
@@ -41,7 +37,9 @@ ferals <- tt_data$brisbane_complaints %>%
   mutate(em = ifelse(grepl("[Pp]ig", category), "1f437", NA),
          em = ifelse(grepl("[Gg]oat", category), "1f410", em),
          em = ifelse(grepl("[Cc]at", category), "1f431", em),
-         em = ifelse(is.na(em), "1f47d", em)) %>%
+         em = ifelse(is.na(em), "1f47d", em),
+         # in order to plot the UFOs first, so they don't hide the others
+         em = relevel(as.factor(em), "1f47d")) %>%
   # tidy up dates
   mutate(year = str_extract(date_range, "20[0-9]{2}"),
          # seems to be a max length of string for str_extract?? this gets round it
@@ -54,6 +52,11 @@ ferals <- tt_data$brisbane_complaints %>%
          quarter = recode(month, jan = "Q1", apr = "Q2", jul = "Q3", oct = "Q4"),
          tidy_date = lubridate::yq(paste0(year, "-", quarter)))
 
+# to make text less blurry, have only one data point per date (transition frame)
+subtitleText <- ferals %>%
+  distinct(tidy_date, .keep_all = TRUE)
+# don't want it to move with gganimate
+minLat <- min(ferals$lat) 
 
 ## Plot it! ####
 ggmap(get_stamenmap(bbox = c(min(ferals$lon) - .25,
@@ -68,17 +71,18 @@ ggmap(get_stamenmap(bbox = c(min(ferals$lon) - .25,
   geom_point(data = ferals, 
              aes(x = lon, y = lat),
              alpha = 0.3, colour = "#52db16", size = 15) +
-  geom_text(data = ferals, 
-            aes(x = 152.9765, y = min(lat) - .421,
-                label = paste0("*Unidentified Feral Others\n\nReported to the RSPCA in\nthe ", 
-                               quarter_text, " quarter of ", year)), lineheight = .8,
+  # creating shadow for the text
+  geom_text(data = subtitleText, 
+            aes(x = 152.9765, y = minLat - .4215,
+                label = paste0("*Unidentified Feral Others\n\nReported in the ", 
+                               quarter_text, " \nquarter of ", year)), lineheight = .8,
             family = "Arial Black", fontface = "bold",
             colour = "black",
             size = 7) +
-  geom_text(data = ferals, 
-            aes(x = 152.9755, y = min(lat) - .42,
-                label = paste0("*Unidentified Feral Others\n\nReported to the RSPCA in\nthe ", 
-                               quarter_text, " quarter of ", year)), lineheight = .8,
+  geom_text(data = subtitleText, 
+            aes(x = 152.975, y = minLat - .42,
+                label = paste0("*Unidentified Feral Others\n\nReported in the ", 
+                               quarter_text, " \nquarter of ", year)), lineheight = .8,
             family = "Arial Black", fontface = "bold",
             colour = "white",
             size = 7) +
@@ -86,28 +90,24 @@ ggmap(get_stamenmap(bbox = c(min(ferals$lon) - .25,
              aes(x = lon, y = lat, image = em)) +
   theme_map() +
   theme(plot.margin = margin(10, 10, 10, 10),
-        plot.caption = element_text(size = 6, family = "Arial Black", hjust = .5)) +
+        plot.caption = element_text(size = 8, family = "Arial Black", hjust = .5)) +
   # adding text shadow
-  annotate("text", x = 152.9765, y = min(ferals$lat) - .201, lineheight = .8,
+  annotate("text", x = 152.9765, y = minLat - .2015, lineheight = .8,
            label = "FERAL PIGS, CATS,\nGOATS AND UFOS*\nOF BRISBANE", 
            family = "Arial Black", fontface = "bold",
            colour = "black", 
            size = 11) +
-  annotate("text", x = 152.9755, y = min(ferals$lat) - .2, lineheight = .8,
+  annotate("text", x = 152.975, y = minLat - .2, lineheight = .8,
            label = "FERAL PIGS, CATS,\nGOATS AND UFOS*\nOF BRISBANE", 
            family = "Arial Black", fontface = "bold",
            colour = "white", 
            size = 11) +
-  # adding text shadow
-  # annotate("text", x = 152.9765, y = min(ferals$lat) - .421, lineheight = .8,
-  #          label = paste0("*Unidentified Feral Others\n\nReported to the RSPCA in\nthe ", quarter_text, " quarter of ", year),
-  #          family = "Arial Black", fontface = "bold",
-  #          colour = "black",
-  #          size = 7) +
   labs(caption = "#TidyTuesday | Graphic: @crthompson | Source: Brisbane Open Data - Animal Complaints") +
   transition_time(tidy_date) 
-
 
 # Export to create making-of gif, adapting the approach used by Georgios Karamanis (@geokaramanis)
 ggsave(filename = file.path("../making-of/temp", paste0("202007c_ferals-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".png")), 
        dpi = 400, width = 6, height = 7)
+
+## Export final gif ####
+anim_save(filename = "../plots/202007c_pets.gif")
