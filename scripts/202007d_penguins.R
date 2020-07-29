@@ -133,7 +133,7 @@ ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm,
   labs(title = "
 Perfectly Proportional Penguins",
        subtitle = "  
-Each dot represents a penguin. Across all three species, the longer the penguins' flipper, the 
+Each dot represents a penguin. Across all three species, the longer the penguins' flippers, the 
 longer their bills also. Their weight, represented by the size of the dot, was also correlated 
 to their flipper and bill lengths. All things in perfect proportion! 
        
