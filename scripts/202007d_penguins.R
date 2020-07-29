@@ -137,10 +137,9 @@ Each dot represents a penguin. Across all three species, the longer the penguins
 longer their bills also. Their weight, represented by the size of the dot, was also correlated 
 to their flipper and bill lengths. All things in perfect proportion! 
        
-And these proportions are so consistent within species that we can fit a simple decision tree 
-model to predict Species from Flipper length and Bill length alone, which correctly predicts 
-the species of nearly 95% of the penguins! Those who were misclassified by the model are 
-represented by triangles. 
+And these proportions are so consistent within species that we can fit a Decision Tree that 
+correctly predicts Species from Flipper length and Bill length for nearly 95% of the penguins! 
+Those who were misclassified by the model are represented by triangles. 
        ",
        x = "Bill length (mm)",
        y = "Flipper length (mm)",
