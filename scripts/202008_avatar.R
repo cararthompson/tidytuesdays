@@ -37,7 +37,7 @@ sweetspot <- ggplot(avatar,
                       values = c("#015E05", "#FF4500", "#1DB4D3"),
                       labels = c("Earth", "Fire", "Water"),
                       guide = F) +
-  labs(title = "The anti sweet spot of chattiness",
+  labs(title = "",
        subtitle = "Across all three books, IMDB ratings drop 
 when the characters say between 2000 and 2200 words.",
        x = "Total number of words spoken by characters",
@@ -60,24 +60,33 @@ plotBook <- function(df = avatar, bookName, loCol, hiCol) {
     coord_polar(theta = "y", start = 4.71, clip = "off") +
     labs(title = bookName,
          x = "",
-         y = "Total words spoken in each chapter") +
+         y = "") +
     # getting pseudo x axis text
     geom_richtext(aes(y = 0, label = chapter_num),
-      size = 2.2,
-      family = "Slayer",
-      fill = NA,
-      label.color = NA,
-      angle = 90,
-      vjust = .5,
-      hjust = 1) +
+                  size = 2.2,
+                  family = "Slayer",
+                  fill = NA,
+                  label.color = NA,
+                  angle = 90,
+                  vjust = .5,
+                  hjust = 1) +
+    scale_fill_continuous(high = hiCol,
+                          low = loCol,
+                          name = "IMDB Rating",
+                          guide = guide_colourbar(
+                        #    direction = "horizontal",
+                            title.position = "top"
+                          )
+                          ) +
     theme(axis.title.y=element_blank(),
           axis.text.y=element_blank(),
           axis.ticks.y=element_blank(),
-          plot.title = element_text(hjust = 0.5),
+          plot.title = element_text(hjust = 0.5, size = 10),
           panel.grid.major = element_line(color = "#ece5d3"), 
-          panel.grid.minor = element_line(color = "#ece5d3")) +
-    scale_fill_continuous(high = hiCol,
-                          low = loCol) 
+          panel.grid.minor = element_line(color = "#ece5d3"),
+          legend.text = element_text(size = "4"),
+          legend.title.align = 0.5,
+          legend.background = element_rect(color = "#ece5d3"))
 }
 
 # Manually defined high nd low because gradient in 
@@ -86,7 +95,41 @@ firePlot <- plotBook(bookName = "Fire", loCol = "#ecb100", hiCol = "#a10000")
 waterPlot <- plotBook(bookName = "Water", loCol = "#1DB4D3", hiCol = "#120976")
 earthPlot <- plotBook(bookName = "Earth", loCol = "#C7C45E", hiCol = "#015E05")
 
+avatar_pic <- file.path("../making-of/temp", "avatar.png")
+
+pic <- ggdraw() + 
+  draw_image(avatar_pic, scale = 1) +
+  theme_avatar()
+
 ## Assemble 4 plots plus image
+toprow <- plot_grid(sweetspot, pic, nrow = 1)
+bottomrow <- plot_grid(firePlot, earthPlot, waterPlot, nrow = 1, rel_widths = c(0.33, 0.33, 0.33))
+title <- ggdraw() +
+  draw_label("Avatar: The Last Airbender",
+             fontfamily = "Slayer",
+             hjust = 0.5,
+             size = 18) +
+  theme_avatar()
+subtitle <- ggdraw() +
+  draw_label("The anti sweet spot of chattiness",
+             fontfamily = "Slayer",
+             hjust = 0.5,
+             size = 16) +
+  theme_avatar()
+subtitle2 <- ggdraw() +
+  draw_label("Total words spoken by book and by chapter",
+             fontfamily = "Slayer",
+             hjust = 0.5,
+             size = 16) +
+  theme_avatar()
+
+plot_grid(title,
+          subtitle,
+          toprow,
+          subtitle2,
+          bottomrow,
+          ncol = 1,
+          rel_heights = c(0.1, 0.05, 0.4, 0.05, 0.4))
 
 
 # Export to create making-of gif 
