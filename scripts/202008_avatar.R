@@ -6,6 +6,7 @@ library(ggforce)
 library(extrafont)
 loadfonts()
 library(ggforce)
+library(ggtext)
 
 
 # Get the data ####
@@ -40,18 +41,40 @@ sweetspot <- ggplot(avatar,
                       guide = F) +
   labs(title = "The anti sweet spot of chattiness",
        subtitle = "Across all three books, IMDB ratings drop 
-when the characters say between 2000 and 2200 words.") 
+when the characters say between 2000 and 2200 words.",
+       x = "Total number of words spoken by characters",
+       y = "IMDB rating")
+
+plotBook <- function(df = avatar, book, palette) {
+  
+}
+
+avatar %>% 
+  filter(book == "Fire") %>%
+ # mutate( = -chapter_num) %>%
+  arrange(-chapter_num) %>%
+  mutate(id = row_number()) -> fire
+  
 
 
-fire <- ggplot(filter(avatar, book == "Fire"), aes(x = chapter_num, y = total_chat, fill = imdb)) +
-  geom_bar(stat = "identity") + # make bars thinner
+ggplot(fire, aes(x = id, y = total_chat, fill = imdb)) +
+  geom_bar(stat = "identity") + 
   theme_avatar(title.font = "Slayer",
                text.font = "Slayer",
                title.size = 14) +
   ylim(c(0, 2750)) +
-  coord_polar(theta = "y", start = 4.71, clip = "on") +
-  # add x axis in right place
-  scale_fill_avatar(palette = "FireNation", nrow(avatar), type = "continuous") 
+  xlim(c(-10, 25)) +
+  coord_polar(theta = "y", start = 4.71, clip = "off") +
+  labs(title = "Fire") +
+  geom_richtext(#data = NULL,
+    aes(y = 0, label = chapter_num),
+    size = 3,
+    family = "Slayer",
+    fill = NA,
+    label.color = NA,
+    vjust = .85
+  ) +
+  scale_fill_avatar(palette = "FireNation", nrow(avatar), type = "continuous") -> fire
 
 
 # Export to create making-of gif 
