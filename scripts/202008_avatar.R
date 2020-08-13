@@ -7,6 +7,7 @@ library(extrafont)
 loadfonts()
 library(ggforce)
 library(ggtext)
+library(cowplot)
 
 
 # Get the data ####
@@ -22,10 +23,7 @@ avatar <- tt_data$avatar %>%
             chapter_num = unique(chapter_num), 
             imdb = unique(imdb_rating))
 
-theme_darkAvatar <- theme_avatar %>%
-  
-  
-  # Plot it! ####
+# Plot it! ####
 
 sweetspot <- ggplot(avatar, 
                     aes(x = total_chat, y = imdb)) +
@@ -45,44 +43,50 @@ when the characters say between 2000 and 2200 words.",
        x = "Total number of words spoken by characters",
        y = "IMDB rating")
 
-plotBook <- function(df = avatar, book, palette) {
-  
+## Create function to make 3 plots with different colour scales
+plotBook <- function(df = avatar, bookName, loCol, hiCol) {
+  df %>% 
+    filter(book == bookName) %>%
+    # to make ordering on plot more intuitive
+    arrange(-chapter_num) %>%
+    mutate(id = row_number()) %>%
+    ggplot(aes(x = id, y = total_chat, fill = imdb)) +
+    geom_bar(stat = "identity") + 
+    theme_avatar(title.font = "Slayer",
+                 text.font = "Slayer",
+                 title.size = 14) +
+    ylim(c(0, 2850)) +
+    xlim(c(-10, 25)) +
+    coord_polar(theta = "y", start = 4.71, clip = "off") +
+    labs(title = bookName,
+         x = "",
+         y = "Total words spoken in each chapter") +
+    # getting pseudo x axis text
+    geom_richtext(aes(y = 0, label = chapter_num),
+      size = 2.2,
+      family = "Slayer",
+      fill = NA,
+      label.color = NA,
+      angle = 90,
+      vjust = .5,
+      hjust = 1) +
+    theme(axis.title.y=element_blank(),
+          axis.text.y=element_blank(),
+          axis.ticks.y=element_blank(),
+          plot.title = element_text(hjust = 0.5),
+          panel.grid.major = element_line(color = "#ece5d3"), 
+          panel.grid.minor = element_line(color = "#ece5d3")) +
+    scale_fill_continuous(high = hiCol,
+                          low = loCol) 
 }
 
-avatar %>% 
-  filter(book == "Fire") %>%
- # mutate( = -chapter_num) %>%
-  arrange(-chapter_num) %>%
-  mutate(id = row_number()) -> fire
-  
+# Manually defined high nd low because gradient in 
+# tvthemes default changed dark/light direction between plots
+firePlot <- plotBook(bookName = "Fire", loCol = "#ecb100", hiCol = "#a10000")
+waterPlot <- plotBook(bookName = "Water", loCol = "#1DB4D3", hiCol = "#120976")
+earthPlot <- plotBook(bookName = "Earth", loCol = "#C7C45E", hiCol = "#015E05")
 
-
-ggplot(fire, aes(x = id, y = total_chat, fill = imdb)) +
-  geom_bar(stat = "identity") + 
-  theme_avatar(title.font = "Slayer",
-               text.font = "Slayer",
-               title.size = 14) +
-  ylim(c(0, 2750)) +
-  xlim(c(-10, 25)) +
-  coord_polar(theta = "y", start = 4.71, clip = "off") +
-  labs(title = "Fire",
-       x = "",
-       y = "Total words spoken in each chapter") +
-  geom_richtext(#data = NULL,
-    aes(y = 0, label = chapter_num),
-    size = 2.2,
-    family = "Slayer",
-    fill = NA,
-    label.color = NA,
-    angle = 90,
-    vjust = .5,
-    hjust = 1) +
-  theme(axis.title.y=element_blank(),
-        axis.text.y=element_blank(),
-        axis.ticks.y=element_blank(),
-        panel.grid.major = element_line(color = "#ece5d3"), 
-        panel.grid.minor = element_line(color = "#ece5d3")) +
-  scale_fill_avatar(palette = "FireNation", nrow(avatar), type = "continuous") 
+## Assemble 4 plots plus image
 
 
 # Export to create making-of gif 
