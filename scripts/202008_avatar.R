@@ -65,16 +65,24 @@ ggplot(fire, aes(x = id, y = total_chat, fill = imdb)) +
   ylim(c(0, 2750)) +
   xlim(c(-10, 25)) +
   coord_polar(theta = "y", start = 4.71, clip = "off") +
-  labs(title = "Fire") +
+  labs(title = "Fire",
+       x = "",
+       y = "Total words spoken in each chapter") +
   geom_richtext(#data = NULL,
     aes(y = 0, label = chapter_num),
-    size = 3,
+    size = 2.2,
     family = "Slayer",
     fill = NA,
     label.color = NA,
-    vjust = .85
-  ) +
-  scale_fill_avatar(palette = "FireNation", nrow(avatar), type = "continuous") -> fire
+    angle = 90,
+    vjust = .5,
+    hjust = 1) +
+  theme(axis.title.y=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        panel.grid.major = element_line(color = "#ece5d3"), 
+        panel.grid.minor = element_line(color = "#ece5d3")) +
+  scale_fill_avatar(palette = "FireNation", nrow(avatar), type = "continuous") 
 
 
 # Export to create making-of gif 
