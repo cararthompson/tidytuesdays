@@ -25,6 +25,10 @@ more](https://github.com/rfordatascience/tidytuesday/blob/master/README.md),
 doing](https://twitter.com/hashtag/TidyTuesday?src=hashtag_click), and
 join in - the more the merrier\!
 
+## 2020-08 - Avatar
+
+<a href='scripts/202008_avatar.R' target='_blank'><img src="plots/202008_avatar.png" align="center"/></a>
+
 ## 2020-07 - Penguins
 
 <a href='scripts/202007d_penguins.R' target='_blank'><img src="plots/202007d_penguins.png" align="center"/></a>
