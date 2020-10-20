@@ -7,7 +7,7 @@ library(treemapify)
 library(ggtext)
 library(ochRe)
 library(extrafont)
-library(png)
+library(patchwork)
 
 # Get data -----
 tt_data <- tidytuesdayR::tt_load(2020, 36)
@@ -32,9 +32,9 @@ theme_crops <- function() {
           axis.title = element_text(color = accentCol, size = 16),
           strip.text = element_text(colour = accentCol, size = 16,
                                     margin = margin(1,0,0.5,0, "cm")), # facet title
-          legend.justification= "left",
-          legend.key = element_rect(fill = earthCol, colour =  earthCol),
-          plot.margin = unit(c(1,4,1,4), "cm"))
+          plot.caption = element_text(hjust = 0.5, size = 14), 
+          # Right extra padding to avoid patchwork moving everything to the right
+          plot.margin = margin(t = 1, r = 3, b = 1, l = 2, "cm"))
 }
 
 # Tree map -----
@@ -56,7 +56,7 @@ treeMap <-
                     color=earthCol, place = "centre") +
   scale_fill_ochre(palette="mccrea") +
   facet_wrap(~year, ncol = 2) +
-  labs(title = "Proportion of Different Crops Produced in France \n1961 vs. 2018",
+  labs(title = "Proportion of Different Crops Produced in France\n1961 vs. 2018",
        subtitle = "\nRice and Peas lost out to Soybeans and Maize") +
   theme_crops()
 
@@ -92,7 +92,7 @@ tractorPlot <- ggplot(frenchCrops,
                vjust = 0.5,
                colour = "white",
                box.colour = earthCol,
-               size = 6,
+               size = 5,
                fill = earthCol,
                family = "EngraversGothic BT",
                maxwidth = unit(8, "lines"),
@@ -105,27 +105,15 @@ tractorPlot <- ggplot(frenchCrops,
   xlab("Year") +
   ylab("Crop production (tonnes per hectare)") +
   labs(title = "\nPotatoes are the steady top of the crops",
-       subtitle = "\nFrance has consistently produced 4 times more tonnes of potatoes\nthan the next leading crop since 1961.") +
+       subtitle = "\nFrance has consistently produced 4 times more tonnes of potatoes\nthan the next leading crop since 1961.",
+       caption = "
+       
+  @crthompson | #TidyTuesday | Source: Our World In Data") +
   theme_crops() +
   theme(legend.position = "none")
 
 # Export image ----
-png(filename = "../plots/202009a_crops.png",type = "cairo",
-    width = 700, height = 1200, units = "px",  pointsize = 12,
-    bg = earthCol)
+# using {patchwork}
+p <- treeMap / tractorPlot
 
-gridExtra::grid.arrange(treeMap, tractorPlot, 
-             top = grid::textGrob("
-Crop production in France\nfrom 1961 to 2018
-                              ", 
-                            gp=grid::gpar(col= accentCol, fontface = "bold", 
-                                    fontfamily = "EngraversGothic BT", fontsize = 36)),
-             bottom = grid::textGrob("
-@crthompson | #TidyTuesday | Source: Our World In Data
-                                 ", 
-                               gp=grid::gpar(col= accentCol, 
-                                      fontfamily = "EngraversGothic BT", fontsize = 14)),
-             layout_matrix = matrix(c(1, 1, 2, 2, 2), 
-                                    ncol=1, byrow=TRUE))
-
-dev.off()
+ggsave(p, filename = "../plots/202009_crops.png", height = 14, width = 8.5, dpi = 400)
