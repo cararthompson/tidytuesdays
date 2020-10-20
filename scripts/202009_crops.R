@@ -16,7 +16,8 @@ tidytuesdayR::readme(tt_data)
 
 # Set theme across plots ----
 earthCol <-  "#3a2b1f"
-accentCol <- "#AEAEAE" # Potato colour
+# To get colours used in plot with 8 levels: scales::show_col(ochre_pal("mccrea")(8))
+accentCol <- "#D1C0AE" # Potato colour
 
 theme_crops <- function() {
   theme_minimal() %+replace%
@@ -44,9 +45,11 @@ frenchCrops <- tt_data$key_crop_yields %>%
   pivot_longer(cols = 4:last_col(),
                names_to = "crop", 
                values_to = "crop_production") %>% 
-  mutate(crop = str_remove_all(crop, " \\(tonnes per hectare\\)")) %>% 
+  mutate(crop = str_remove_all(crop, " \\(tonnes per hectare\\)")) %>%
   set_names(nm = names(.) %>% tolower()) %>%
-  filter(!is.na(crop_production))
+  filter(!is.na(crop_production)) %>%
+  # doing factor transformation here to exclude unused levels
+  mutate(crop = factor(crop, levels = unique(frenchCrops$crop)))
 
 treeMap <- 
   ggplot(filter(frenchCrops,  year %in% c(max(year), min(year))),
@@ -54,8 +57,8 @@ treeMap <-
   geom_treemap(show.legend = F) +
   geom_treemap_text(aes(label=crop, family = "EngraversGothic BT"), 
                     color=earthCol, place = "centre") +
+  facet_grid(~year, drop = F) +
   scale_fill_ochre(palette="mccrea") +
-  facet_wrap(~year, ncol = 2) +
   labs(title = "Proportion of Different Crops Produced in France\n1961 vs. 2018",
        subtitle = "\nRice and Peas lost out to Soybeans and Maize") +
   theme_crops()
@@ -79,18 +82,19 @@ texts <-
 
 tractorPlot <- ggplot(frenchCrops, 
                       aes(x = year, y = crop_production, colour = crop)) + 
-  scale_colour_ochre(palette="mccrea") +
+  # Colours were otherwise reversed between plots - not sure why!!
+  scale_colour_ochre(palette="mccrea", reverse = T) +
   geom_line(size = 2, linetype = "twodash",
-            show.legend = F) +
+            show.legend = T, na.rm = T) +
   geom_image(data = tractors,
-             aes(image = image, x = x, y = y, colour = crop), 
+             aes(image = image, x = x, y = y), 
              size = 0.08,
              angle = 0) +
   geom_textbox(data = texts,
                aes(year, crop_production, 
                    label = text),
                vjust = 0.5,
-               colour = "white",
+               colour = accentCol,
                box.colour = earthCol,
                size = 5,
                fill = earthCol,
