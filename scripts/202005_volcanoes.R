@@ -50,7 +50,7 @@ background_map <- ggplot(data = world) +
                          label.hjust = 0),
     values = c(No = "orange", Yes = "darkgreen"),
     labels = c("have and   ", "haven't erupted since then")) +
-  labs(caption = "#TidyTuesdays | @crthompson | Data: The Smithsonian Institution") +
+  labs(caption = "#TidyTuesdays | @cararthompson | Data: The Smithsonian Institution") +
   xlab("") +
   ylab("") 
 

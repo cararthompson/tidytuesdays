@@ -143,7 +143,7 @@ Those who were misclassified by the model are represented by triangles.
        ",
        x = "Bill length (mm)",
        y = "Flipper length (mm)",
-       caption = "#TidyTuesday | Graphic: @crthompson 
+       caption = "#TidyTuesday | Graphic: @cararthompson 
 Source: Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica)
   penguin data. R package version 0.1.0. https://allisonhorst.github.io/palmerpenguins/") +
   theme_penguin()

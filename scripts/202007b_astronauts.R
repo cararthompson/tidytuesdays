@@ -59,7 +59,7 @@ time lag.
 All this with a few notable exceptions...",
        x = "Age at start of mission",
        y = "",
-       caption =  "\n\n#TidyTuesday | Graphic: @crthompson | Data:  Mariya Stavnichuk and Tatsuya Corlett") +
+       caption =  "\n\n#TidyTuesday | Graphic: @cararthompson | Data:  Mariya Stavnichuk and Tatsuya Corlett") +
   xlim(c(10, 85)) +
   geom_textbox(data = texts,
                aes(age, year, 
@@ -86,5 +86,5 @@ All this with a few notable exceptions...",
   theme_astro()
 
 # Export to create making-of gif, adapting the approach used by Georgios Karamanis (@geokaramanis)
-ggsave(filename = file.path("making-of/temp", paste0("202007b_astronauts-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".png")), 
+ggsave(filename = file.path("../making-of/temp", paste0("202007b_astronauts-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".png")), 
        dpi = 400, width = 10, height = 10)

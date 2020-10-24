@@ -102,7 +102,7 @@ ggmap(get_stamenmap(bbox = c(min(ferals$lon) - .25,
            family = "Arial Black", fontface = "bold",
            colour = "white", 
            size = 11) +
-  labs(caption = "#TidyTuesday | Graphic: @crthompson | Source: Brisbane Open Data - Animal Complaints") +
+  labs(caption = "#TidyTuesday | Graphic: @cararthompson | Source: Brisbane Open Data - Animal Complaints") +
   transition_time(tidy_date) +
   ease_aes('cubic-in-out')
 

@@ -58,7 +58,7 @@ and <span style='color:#6f5438;'>nine oldest</span> caribou through
        x = "Longitude", 
        y = "Latitude", 
        colour = "",
-       caption =  "\n\n#TidyTuesdays | Graphic: @crthompson | Data: Movebank") +
+       caption =  "\n\n#TidyTuesdays | Graphic: @cararthompson | Data: Movebank") +
   transition_time(timestamp) + 
   theme_pomological_fancy() %+replace%
   theme(plot.title = element_text(hjust = 0.5, size = 14),

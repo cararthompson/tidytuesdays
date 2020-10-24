@@ -123,7 +123,7 @@ lowest <--- strength of relationship to overall appreciation ---> highest",
   guides(colour=guide_legend(ncol=2))
 
 # Export plot ####
-png(filename = "202007_coffee.png",
+png(filename = "../plots/202007_coffee.png",
     width = 600, height = 800, units = "px", pointsize = 12,
     bg = "#150b0a")
 
@@ -136,7 +136,7 @@ Riding the sweet coffee wave - but for how long?
                                     fontfamily = "Consolas", fontsize = 18)),
              bottom = textGrob("
 
-@crthompson | #TidyTuesday | Source: James LeDoux & Coffee Quality Database
+@cararthompson | #TidyTuesday | Source: James LeDoux & Coffee Quality Database
                                ", 
                                gp=gpar(col="#B19375", 
                                        fontfamily = "Consolas", fontsize = 10)),

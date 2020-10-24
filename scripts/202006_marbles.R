@@ -64,7 +64,7 @@ metaRace <- ggplot(marbles) +
        subtitle = "Winner of the meta race, look at him go!\n",
        x = "", 
        y = "Losing < --- Cumulative Finishing Place ---> Winning!\n\n", 
-       caption =  "#TidyTuesdays | @crthompson") +
+       caption =  "#TidyTuesdays | @cararthompson") +
   theme_marbletastic() +
   transition_states(Race, transition_length = 2, 
                     state_length = 4, wrap = F) +
@@ -97,7 +97,7 @@ meanReg <- ggplot(marblesInOrder) +
        subtitle = "Always towards the front of the pack, he evades the regression to the mean!\n", 
        x = "",
        y = "Losing < --- Cumulative Place Relative To The Middle Of The Pack ---> Winning!\n\n", 
-       caption =  "#TidyTuesdays | @crthompson") +
+       caption =  "#TidyTuesdays | @cararthompson") +
   theme_marbletastic() +
   transition_states(Race, transition_length = 2, 
                     state_length = 4, wrap = F) +

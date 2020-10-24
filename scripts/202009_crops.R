@@ -49,7 +49,7 @@ frenchCrops <- tt_data$key_crop_yields %>%
   set_names(nm = names(.) %>% tolower()) %>%
   filter(!is.na(crop_production)) %>%
   # doing factor transformation here to exclude unused levels
-  mutate(crop = factor(crop, levels = unique(frenchCrops$crop)))
+  mutate(crop = factor(crop, levels = unique(crop)))
 
 treeMap <- 
   ggplot(filter(frenchCrops,  year %in% c(max(year), min(year))),
@@ -112,7 +112,7 @@ tractorPlot <- ggplot(frenchCrops,
        subtitle = "\nFrance has consistently produced 4 times more tonnes of potatoes\nthan the next leading crop since 1961.",
        caption = "
        
-  @crthompson | #TidyTuesday | Source: Our World In Data") +
+  @cararthompson | #TidyTuesday | Source: Our World In Data") +
   theme_crops() +
   theme(legend.position = "none")
 
