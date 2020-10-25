@@ -1,6 +1,7 @@
 library(tidyverse)
 library(gganimate)
 library(lubridate)
+library(extrafont)
 library(ggpomological)
 library(ggmap)
 library(ggtext)
@@ -48,7 +49,8 @@ ggmap(get_stamenmap(bbox = c(min(youngAndOld$longitude) - .5,
   scale_colour_manual(values = c("Summer" = pomo_pal[4], 
                                  "Winter" = pomo_pal[10])) + 
   guides(fill = guide_legend(override.aes = list(alpha = 1))) + 
-  labs(title = "Caribou travel through the seasons of life \n ", 
+  labs(title = "Caribou travel through the seasons of life
+       ", 
        subtitle = "  
 Tracing the steps of the <span style='color:#e68c7c;'>nine youngest</span>  
 and <span style='color:#6f5438;'>nine oldest</span> caribou through  
@@ -58,11 +60,12 @@ and <span style='color:#6f5438;'>nine oldest</span> caribou through
        x = "Longitude", 
        y = "Latitude", 
        colour = "",
-       caption =  "\n\n#TidyTuesdays | Graphic: @cararthompson | Data: Movebank") +
+       caption =  "\n\n#TidyTuesday | Graphic: @cararthompson | Data: Movebank") +
   transition_time(timestamp) + 
   theme_pomological_fancy() %+replace%
-  theme(plot.title = element_text(hjust = 0.5, size = 14),
-        plot.subtitle = element_markdown(hjust = 0.5, size = 11, lineheight = 1),
+  theme(plot.title = element_text(hjust = 0.5, size = 15),
+        plot.subtitle = element_markdown(hjust = 0.5, size = 13, lineheight = 0.8,
+                                         family = "Homemade Apple"),
         plot.caption = element_text(size = 8, family = "", hjust = .5),
         axis.title = element_text(size = 8),
         axis.text = element_text(size = 8)) 
