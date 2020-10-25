@@ -25,6 +25,10 @@ more](https://github.com/rfordatascience/tidytuesday/blob/master/README.md),
 doing](https://twitter.com/hashtag/TidyTuesday?src=hashtag_click), and
 join in - the more the merrier\!
 
+## 2020-09 - Everest
+
+<a href='scripts/202010_everest.R' target='_blank'><img src="plots/202010_everest.png" align="center"/></a>
+
 ## 2020-09 - Crops
 
 <a href='scripts/202009_crops.R' target='_blank'><img src="plots/202009_crops.png" align="center"/></a>
