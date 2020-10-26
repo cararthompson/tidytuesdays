@@ -3,6 +3,7 @@
 library(tidyverse)
 library(tidytuesdayR)
 library(extrafont)
+library(ggtext)
 
 # Get data ----
 # tt_data <- tidytuesdayR::tt_load(2020, 39)
@@ -79,7 +80,8 @@ ggplot() +
                   alpha = death_height_metres, shape = success), show.legend = F) +
   scale_shape_manual(values=c(3, 8)) +
   scale_x_continuous(name = "", breaks=seq(1920, 2020, 20)) +
-  scale_y_continuous(name = "Number of climbers", breaks=c(0, 1000, 2000, 3000),
+  scale_y_continuous(name = "Number of climbers", limits = c(-50, 90*100 + 1200), 
+                     breaks=c(0, 1000, 2000, 3000),
                      sec.axis = sec_axis(trans=~(.-1200)/100, name="Age",
                                          breaks = seq(30, 90, 20))) +
   geom_hline(yintercept = 0, size = 0.5, colour = textCol) +
@@ -87,17 +89,17 @@ ggplot() +
 The Shadow of the Ascent
        ",
        subtitle = "Each peak above zero represents the number of people who made it to the  
-summit of Everest and back in each decade. Each peak below zero shows the   
-number of poeple who died on expeditions in each decade. The valleys   
+summit of Everest and back in each decade. Each peak below zero shows the  
+number of people who died on expeditions in each decade. The valleys  
 show the cumulative means for each group. The peaks and valleys  
 are staggered for ease of viewing.  
   
-Because the deaths risk being dwarved by the successes, each star   
+Because the deaths risk being dwarfed by the successes, each star  
 represents a person who died on an expedition each year. The height  
-of the star represents their age. The higher they were when they died,   
-the brigher their star. Those who had succeeded in making it to the  
-summit are represented by asterisks, others by crosses.   
-  
+of the star represents their age. The higher they were when they died,  
+the brighter their star. Those who had succeeded in making it to the  
+summit are represented by asterisks, others by crosses.  
+
 Throughout this plot, <span style='color:#E87EA1'>hired workers</span>, 94% of whom  
 are from Nepal, are compared to <span style='color:#FD994F'>other climbers</span>  
 who hail from 142 different nations.",
@@ -106,6 +108,4 @@ who hail from 142 different nations.",
 
 # Export ----
 ggsave(filename = "../plots/202010_everest.png", height = 7, width = 6, dpi = 400)
-
-
 
