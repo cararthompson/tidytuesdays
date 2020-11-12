@@ -44,7 +44,7 @@ INFORMATION WAVE
 The countries with the greatest number of mobile phone subscriptions per  
 person have also tended to have the highest GPD per capita, with a  
 notable exception for Europe: Montenegro* - Peak phones per person  
-in Europe in 2009 at 2.08, with a GPD per Capita rank of 34/40.") +
+in Europe in 2009 at 2.08, with a GPD per capita rank of 34/40.") +
   scale_size(range = c(.5, 2)) +
   labs(x = "Year",
        y = "Average Mobile Phone Subscriptions Per Person",
