@@ -71,3 +71,4 @@ of the Big Mac in of the region).",
   
 # Export gif ----
 anim_save(filename = "../plots/202012_bigmac.gif")
+
