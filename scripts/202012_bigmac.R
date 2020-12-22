@@ -58,7 +58,7 @@ tt_data$`big-mac`%>%
        subtitle = "\n
 Each burger represents the USD price of Big Mac in the region  
 named at the bottom of the graph. The bigger the halo around it,
-the higher the exchange rate (so the lower the relative value  
+the higher the exchange rate (so the higher the relative value  
 of the Big Mac in of the region).",
        x = "Region",
        y = "Price in USD") +
