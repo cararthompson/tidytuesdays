@@ -25,6 +25,10 @@ more](https://github.com/rfordatascience/tidytuesday/blob/master/README.md),
 doing](https://twitter.com/hashtag/TidyTuesday?src=hashtag_click), and
 join in - the more the merrier\!
 
+## 2020-12 - Christmas
+
+<a href='scripts/202012_christmasCard.R' target='_blank'><img src="plots/202012_christmasCard.gif" align="center"/></a>
+
 ## 2020-12 - Big Mac
 
 <a href='scripts/202012_bigmac.R' target='_blank'><img src="plots/202012_bigmac.gif" align="center"/></a>
