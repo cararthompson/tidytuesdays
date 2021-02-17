@@ -25,6 +25,10 @@ more](https://github.com/rfordatascience/tidytuesday/blob/master/README.md),
 doing](https://twitter.com/hashtag/TidyTuesday?src=hashtag_click), and
 join in - the more the merrier!
 
+## 2021-01 - W.E.B. DuBois Challenge
+
+<a href='scripts/202102_webdubois.R' target='_blank'><img src="plots/202102_webdubois.png" align="center"/></a>
+
 ## 2021-01 - Art
 
 <a href='scripts/202101_art.R' target='_blank'><img src="plots/202101_art.png" align="center"/></a>
