@@ -153,5 +153,7 @@ anim_save(animate(plot = anim_spiral,  nframes = 2000),
           end_pause = 300, rewind = F, fps = 100)
 # I the cropped and modified the speed of the gif with an online tool
 # because I couldn't get the frame rate needed through gganimate
+# and there was white space around the gif despite the size being the same
+# as the static image.
 
 
