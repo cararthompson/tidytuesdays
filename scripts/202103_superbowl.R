@@ -84,11 +84,11 @@ p <- ggplot() +
        y = "Proportion of ads with celebrities") +
   geom_image(data = sb, 
              aes(x = animals, y = celebrities, image = image),
-             height = 0.16) +
+             height = 0.2) +
   geom_image(data = max_likes,
              aes(x = animals, y = celebrities,
                  image = image),
-             height = 0.16) +  
+             height = 0.2) +  
   geom_image(data = max_likes, 
              aes(x = animals, y = celebrities + 0.05),
              image = "../making-of/temp-logos/ball.png",
@@ -111,7 +111,7 @@ ggsave(filename = file.path("../making-of/temp",
                             paste0("202103_superbowl-", format(Sys.time(), "%Y%m%d_%H%M%S"), ".png")),
        dpi = 400, width = 12, height = 12.5)
 
-
+## Export final plot ----
 anim_save(animate(p, nframes = 300),
           filename = file.path("../plots", "202103_superbowl.gif"),
           res = 300, width = 6, height = 6.25, units = "in",
