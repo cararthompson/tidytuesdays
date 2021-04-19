@@ -40,10 +40,10 @@ tt_data$mobile %>%
 THE RISE OF THE  
 INFORMATION WAVE  
        ",
-       subtitle = "Each dot represents a country. The bigger its size, the higher its GPD per capita.  
+       subtitle = "Each dot represents a country. The bigger its size, the higher its GDP per capita.  
 The countries with the greatest number of mobile phone subscriptions per  
-person have also tended to have the highest GPD per capita, with a  
-notable exception for Europe: Montenegro* - Peak phones per person  
+person have also tended to have the highest GDP per capita, with a  
+notable exception for Europe: Montenegro* - peak phones per person  
 in Europe in 2009 at 2.08, with a GPD per capita rank of 34/40.") +
   scale_size(range = c(.5, 2)) +
   labs(x = "Year",
