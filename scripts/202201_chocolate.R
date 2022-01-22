@@ -27,7 +27,7 @@ tt_data$chocolate %>%
   geom_area(aes(x = rating, y = rating),
             fill = background) +
   geom_textpath(aes(x = rating, y = prop*6 + rating*1.1),
-                label = "Each entry is given a score of 1 to 4. The swirl is thickest as it passes 3.5: the score most often attributed in history of the contest.",
+                label = "Each entry is given a score of 1 to 4. The swirl is thickest as it passes 3.5, the score most attributed in the history of the project.",
                 family = "DM Sans",
                 colour = purple,
                 text_only = T) +
