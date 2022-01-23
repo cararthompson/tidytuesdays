@@ -17,9 +17,7 @@ tt_data$chocolate %>%
   group_by(rating) %>%
    count() %>%
    ungroup() %>%
-  mutate(prop = n/nrow(tt_data$chocolate),
-         spiral_y = case_when(rating > 3 ~ rating - 2,
-                              TRUE ~ rating)) %>%
+  mutate(prop = n/nrow(tt_data$chocolate)) %>%
   ggplot() +
   geom_area(aes(x = rating, y = prop*6 + rating),
             fill = purple,
