@@ -27,7 +27,7 @@ join in - the more the merrier!
 
 ## 2022-05 - Best sellers
 
-<a href='scripts/202205_best-sellers.R' target='_blank'><img src="plots/202205_best-sellers.png" align="center"/></a>19
+<a href='scripts/202205_best-sellers.R' target='_blank'><img src="plots/202205_best-sellers.png" align="center"/></a>
 
 ## 2022-03 - Packages
 
