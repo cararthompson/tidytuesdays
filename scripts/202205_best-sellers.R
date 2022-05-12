@@ -50,11 +50,11 @@ closest it was to Number 1 on its debut week, the taller it is.
 The closest it got to Number 1, the more purple it is.
        
 Most books on this list made it to Number 1 at some point.
-Different decades had different patters, with more books in
+Different decades had different patterns, with more books in
 the 1950s-60s starting lower down on the list. Only one book
 in the 1980s remaining on the list for a year or more. The 1990s
-and early 2000s saw the longest residencies on the list, with
-four books remaining on the bestseller list for more than three years.
+and early 2000s saw the longest residencies, with four books 
+remaining on the bestseller list for more than three years.
 
 Can you name them?
 
