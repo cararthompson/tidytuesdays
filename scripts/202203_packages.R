@@ -98,7 +98,7 @@ number of packages with the corresponding number of vignettes.
 Somewhat surprisingly, the most common number of vignettes is 0! First and second  
 prizes for the most vignettes go to {pla} and {catdata}. The **", tv_text, "** sits squarely  
 within the norm, every package having more vignettes now than when it first  
-appeared in CRAN. Sweet!"),
+appeared on CRAN. Sweet!"),
 x = "",
 y = "Number of vignettes",
 caption = "#TidyTuesday | Graphic: @cararthompson | Data: Robert Flight") +
