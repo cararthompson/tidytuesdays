@@ -18,7 +18,7 @@ p <- flight_data$flights %>%
        title = "\"We're just a flight away!\"",
        subtitle = "The number of flights arriving at Paris Charles De Gaulle went from an average of<br>over 650 a day
        to 43 at the start of April 2020.<br>Suddenly, being \"just a flight away\"<br>was no source of comfort.<br>This simple
-       graph is an ode<br>to the friends and families<br>who found themselves suddenly separated<br>during the pandemic.",
+       graph is an ode<br>to the friends and families<br>who found themselves unpredictably separated<br>during the pandemic.",
        caption = "@cararthompson | #TidyTuesday | Source: Eurocontrol") +
   theme_minimal() +
   theme(panel.background = element_rect(fill = "lightblue", colour = "lightblue"),
@@ -26,7 +26,7 @@ p <- flight_data$flights %>%
         plot.title = element_markdown(family = "Daniel", colour = "#59516c", size = 24,
                                       hjust = 0.9, margin = unit(c(1.5, 0, 0, 0), "cm")),
         plot.subtitle = element_markdown(family = "DM Sans", colour = "#716A81", size = 16, 
-                                         hjust = 0.9, lineheight = 1.3, margin = unit(c(1.5, 0, 1, 0), "cm")),
+                                         hjust = 0.9, lineheight = 1.35, margin = unit(c(1.5, 0, 1, 0), "cm")),
         plot.caption = element_markdown(family = "Daniel", colour = "#59516c", size = 12, 
                                         hjust = 0.9, margin = unit(c(1.5, 0, 0, 0), "cm")),
         axis.line.x = element_line(colour = "#C5C2CC"),
