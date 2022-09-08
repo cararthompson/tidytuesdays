@@ -95,9 +95,9 @@ ggplot() +
                    x = 1952,
                    label = "**The number of different colours of LEGO bricks has grown from 10 in 1949 to 65 in 2022.**<br><br>
                    The adoption of a greater range of colours over time is tied to the company's launch of story-driven themes, such as the 
-                   the <span style=\"color:#fe810e\">*StarWars*</span> and <span style=\"color:#BBE90B\">*Bionicle*</span> ranges in the late 1990s and early 2000s.
+                   <span style=\"color:#fe810e\">*StarWars*</span> and <span style=\"color:#BBE90B\">*Bionicle*</span> ranges in the late 1990s and early 2000s.
                    The emergence of turquoise pieces in 2012 can be tied to the launch of the <span style=\"color:#aeefec\">*LEGO Friends*</span> product range.<br><br>
-                   Whatever we make of the choice of colours and product ranges, the growth in the number unique of sets produced over the last 20 years would suggest the shift to 
+                   Whatever we make of the choice of colours and product ranges, the growth in the number of unique sets produced over the last 20 years would suggest the shift to 
                    story-driven sets was a smart move.<br>
                    A diversity success story? Discuss."),
                halign = 0, hjust = 0,
