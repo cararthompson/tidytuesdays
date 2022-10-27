@@ -3,7 +3,7 @@ My \#TidyTuesday contributions
 
 Welcome to my \#TidyTuesday repo. Clicking on a plot will take you to
 the code I wrote to build it. Happy browsing, and if you like what you
-see, [get in touch](https://twitter.com/cararthompson)!
+see, [get in touch](https://www.cararthompson.com/)!
 
 ## What is \#TidyTuesday?
 
