@@ -25,6 +25,10 @@ more](https://github.com/rfordatascience/tidytuesday/blob/master/README.md),
 doing](https://twitter.com/hashtag/TidyTuesday?src=hashtag_click), and
 join in - the more the merrier!
 
+## 2022-09 - GBBO
+
+<a href='scripts/202210_gbbo.R' target='_blank'><img src="plots/202210_gbbo.png" align="center"/></a>
+
 ## 2022-09 - Lego
 
 <a href='scripts/202209_lego.R' target='_blank'><img src="plots/202209_lego.png" align="center"/></a>
