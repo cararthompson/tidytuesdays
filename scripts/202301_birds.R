@@ -76,7 +76,7 @@ ggplot(rare_finds) +
                        halign = 1,
                        vjust = 1, valign = 1,
                        width = unit(25, "lines"),
-                       size = 1.55,
+                       size = 2,
                        lineheight = 1.3,
                        fill = NA,
                        box.colour = NA,
