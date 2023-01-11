@@ -71,7 +71,7 @@ ggplot(rare_finds) +
                        family = "Mukta") +
   ggtext::geom_textbox(aes(x = 5.5,
                            y = 35.9,
-                           label = "Dataviz: @cararthompson | Source: Project FeedwerWatch | Image: rspb.org.uk"),
+                           label = "Dataviz: @cararthompson | Source: Project FeederWatch | Image: rspb.org.uk"),
                        hjust = 1, 
                        halign = 1,
                        vjust = 1, valign = 1,
