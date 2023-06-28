@@ -28,20 +28,20 @@ constitution_colours <- c("People" = "#193235",
 
 constitution_places <- places$us_place_names %>%
   mutate(constitution_word = 
-           case_when(grepl("People", feature_name) ~ "People", #193235
-                     grepl("United", feature_name) ~ "United", #51646a
-                     grepl("States", feature_name) ~ "States", #7c597d
+           case_when(grepl("People", feature_name) ~ "People", 
+                     grepl("United", feature_name) ~ "United", 
+                     grepl("States", feature_name) ~ "States",
                      # To keep original capitalisation in preamble
-                     grepl("[pP]erfect", feature_name) ~ "perfect", #98a197
-                     grepl("Union", feature_name) ~ "Union", #ab8699
-                     grepl("Justice", feature_name) ~ "Justice", #011d4c
-                     grepl("Tranquility", feature_name) ~ "Tranquility", #6a869a
-                     grepl("[Dd]efense", feature_name) ~ "defense", #575160
-                     grepl("Welfare", feature_name) ~ "Welfare", #375558
-                     grepl("Blessing", feature_name) ~ "Blessings", #dd8c1f
-                     grepl("Liberty", feature_name) ~ "Liberty",  #6c5f4e
+                     grepl("[pP]erfect", feature_name) ~ "perfect", 
+                     grepl("Union", feature_name) ~ "Union", 
+                     grepl("Justice", feature_name) ~ "Justice", 
+                     grepl("Tranquility", feature_name) ~ "Tranquility", 
+                     grepl("[Dd]efense", feature_name) ~ "defense", 
+                     grepl("Welfare", feature_name) ~ "Welfare", 
+                     grepl("Blessing", feature_name) ~ "Blessings", 
+                     grepl("Liberty", feature_name) ~ "Liberty",  
                      grepl("Posterity", feature_name) ~ "Posterity", 
-                     grepl("Constitution", feature_name) ~ "Constitution", #8f3132
+                     grepl("Constitution", feature_name) ~ "Constitution", 
                      grepl("America", feature_name) ~ "America")) %>%
   # Join before turning into factor otherwise undoes the factor transformation
   left_join(places$us_place_history) %>%
