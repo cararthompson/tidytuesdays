@@ -346,16 +346,16 @@ plot_with_background <- cowplot::ggdraw(p) +
   theme(plot.background = element_rect(colour = "#E5E0E7", 
                                        fill = "#F9F6F3", size = 12.5))
 
+# Original
 ggiraph::girafe(ggobj = plot_with_background,
                 options = list(
                   ggiraph::opts_hover(css = "stroke-width:3px;stroke-opacity:0.7;"),
                   ggiraph::opts_tooltip(#use_fill = TRUE, 
-                    "background-color:#42435C;color:#F9F6F3;padding:5px;line-height:1.2;border-radius:3px;font-size:10pt;font-family:Cabin;max-width:300px;",
-                    opacity = 0.85),
+                    "background-color:#42435C;font-weight:500;color:#FDFDFC;letter-spacing:0.025em;padding-top:7.5px;line-height:1.3;border-radius:3px;font-size:10pt;font-family:IBM Plex Sans;max-width:300px;",
+                    opacity = 0.9),
                   ggiraph::opts_sizing(width = 1)
                   
                 ),
                 width_svg = 10, 
-                height_svg = 7
-)
+                height_svg = 7)
 
