@@ -25,6 +25,10 @@ more](https://github.com/rfordatascience/tidytuesday/blob/master/README.md),
 doing](https://twitter.com/hashtag/TidyTuesday?src=hashtag_click), and
 join in - the more the merrier!
 
+## 2023-06 - Time
+
+<a href='scripts/202309_global-human-day.R' target='_blank'><img src="plots/202309_global-human-day.png" align="center"/></a>
+
 ## 2023-06 - Places
 
 <a href='scripts/202306_places.R' target='_blank'><img src="plots/202306_places.gif" align="center"/></a>
