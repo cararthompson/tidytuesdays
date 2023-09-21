@@ -121,8 +121,7 @@ gb <- ggplot(data = filter(human_day_filtered, country_iso3 == "GBR"),
                                                        hjust = 0.53, halign = 0, width = unit(12, "lines")))
 
 plots <- cowplot::plot_grid(gb, average, fr, 
-                   nrow = 1, rel_widths = c(0.4, 0.2, 0.4)) +
-  labs(caption = "This is a caption")
+                   nrow = 1, rel_widths = c(0.4, 0.2, 0.4))
 
 # Assemble components
 cowplot::plot_grid(plot_title,
