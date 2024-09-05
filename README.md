@@ -27,7 +27,7 @@ join in - the more the merrier!
 
 ## 2024-09 - Stack Overflow
 
-<a href='scripts/202304_so_survey.R' target='_blank'><img src="plots/202409_so_survey.png" align="center"/></a>
+<a href='scripts/202409_so_survey.R' target='_blank'><img src="plots/202409_so_survey.png" align="center"/></a>
 
 ## 2023-09 - Time
 
