@@ -263,7 +263,7 @@ create_empty_map <- function() {
 }
 
 
-# Export all the maps
+# Export all the maps ----
 
 create_empty_map()
 
@@ -271,3 +271,91 @@ purrr::map(levels(constitution_places$constitution_word),
            create_map)
 
 create_final_map()
+
+
+# Interactive version ----
+
+highlighted_preamble <- "We the **<span style='color:#193235'>People</span>** of the **<span style='color:#51646a'>United</span>** **<span style='color:#7c597d'>States</span>**, in Order to form a more **<span style='color:#98a197'>perfect</span>** **<span style='color:#011d4c'>Union</span>**, establish **<span style='color:#303155'>Justice</span>**, insure domestic **<span style='color:#6a869a'>Tranquility</span>**, provide for the common **<span style='color:#575160'>defense</span>**, promote the general **<span style='color:#375558'>Welfare</span>**, and secure the **<span style='color:#dd8c1f'>Blessings</span>** of **<span style='color:#437d76'>Liberty</span>** to ourselves and our Posterity, do ordain and establish this **<span style='color:#996202'>Constitution</span>** for the United States of **<span style='color:#5d4355'>America</span>**."
+
+constitution_places <- constitution_places %>%
+  rowwise() %>%
+  mutate(tooltip_content = paste0(setdiff(c(paste0("<span style='font-size:12pt;font-family:Averia Serif GWF;'>", feature_name, "</span>"),
+                                            description, 
+                                            history), 
+                                          NA), 
+                                  collapse = "<br>"))
+
+p <- ggplot() +
+  ggiraph::geom_point_interactive(data = constitution_places,
+                                  aes(x = prim_long_dec,
+                                      y = prim_lat_dec,
+                                      colour = constitution_word,
+                                      tooltip = tooltip_content,
+                                      # need to set this for hover CSS to work
+                                      data_id = feature_id),
+                                  alpha = 0.7,
+                                  size = 2) +
+  geom_line(data = constitution_places,
+            aes(x = prim_long_dec,
+                y = prim_lat_dec,
+                colour = constitution_word),
+            alpha = 0.5,
+            linewidth = 0.1) +
+  ggtext::geom_textbox(data = NULL,
+                       aes(x = -108, y = 68),
+                       label = toupper("No place like Posterity"),
+                       vjust = 1,
+                       halign = 0.5,
+                       family = "Averia Serif GWF",
+                       fontface = "bold",
+                       size = 6,
+                       box.colour = NA,
+                       width = unit(30, "lines"),
+                       fill = NA,
+                       colour = "#090911") +
+  ggtext::geom_textbox(data = NULL,
+                       aes(x = -108, y = 64),
+                       label = highlighted_preamble,
+                       alpha = 0.8,
+                       box.colour = NA,
+                       family = "Averia Serif Libre",
+                       vjust = 1,
+                       width = unit(33.5, "lines"),
+                       fill = NA,
+                       colour = "#131321") +
+  scale_colour_manual(breaks = constitution_colours$constitution_word, 
+                    values = constitution_colours$colour) +
+  labs(caption = "Place names in the USA which include each key word from the Constitution preamble. No place names containing the word \"Posterity\" were found.
+      <br>Dataviz: Cara Thompson | #TidyTuesday | Source: US Board of Geographic Names") +
+  coord_sf() +
+  # To keep the map stable regardless of the range of the data
+  xlim(c(-154, -62)) +
+  ylim(c(18, 70.5)) +
+  theme_void() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        plot.caption = ggtext::element_textbox_simple(hjust = 0.5,
+                                                      halign = 0.5,
+                                                      family = "Averia Serif Libre",
+                                                      size = 8,
+                                                      colour = "#42435C"))
+
+
+# To get a background that works regardless of fixed coordinates:
+plot_with_background <- cowplot::ggdraw(p) + 
+  theme(plot.background = element_rect(colour = "#E5E0E7", 
+                                       fill = "#F9F6F3", size = 12.5))
+
+# Original
+ggiraph::girafe(ggobj = plot_with_background,
+                options = list(
+                  ggiraph::opts_hover(css = "stroke-width:3px;stroke-opacity:0.7;"),
+                  ggiraph::opts_tooltip(#use_fill = TRUE, 
+                    "background-color:#42435C;font-weight:500;color:#FDFDFC;letter-spacing:0.025em;padding-top:7.5px;line-height:1.3;border-radius:3px;font-size:10pt;font-family:IBM Plex Sans;max-width:300px;",
+                    opacity = 0.9),
+                  ggiraph::opts_sizing(width = 1)
+                  
+                ),
+                width_svg = 10, 
+                height_svg = 7)
+
