@@ -96,7 +96,7 @@ munro_plot <- munro_df |>
       margin = margin(9, 0, 18, 0),
       colour = "#3e3e3e"
     ),
-    plot.margin = ggplot2::margin(rep(36, 4)),
+    plot.margin = ggplot2::margin(c(36*1.5, rep(36, 3))),
     plot.background = element_rect(
       colour = "#ffffff",
       fill = "#f8f8f8",
