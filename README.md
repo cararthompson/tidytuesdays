@@ -25,6 +25,10 @@ more](https://github.com/rfordatascience/tidytuesday/blob/master/README.md),
 doing](https://twitter.com/hashtag/TidyTuesday?src=hashtag_click), and
 join in - the more the merrier!
 
+## 2025-08 - Munros
+
+<a href='scripts/202508_munros.R' target='_blank'><img src="plots/202508_munros.png" align="center"/></a>
+
 ## 2025-03 - Pixar
 
 <a href='scripts/202503_pixar.R' target='_blank'><img src="plots/202503_pixar.png" align="center"/></a>
