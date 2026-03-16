@@ -21,12 +21,14 @@ munro_df <- munros$scottish_munros |>
   dplyr::rowwise() |>
   dplyr::mutate(
     x_coord = ceiling(y_total / 18150) + sample(runif(100, -0.06, 0.06), 1),
+    label_y = (mean(y_total, lag(y_total))) %% 18150 - (Height_m / 2)
   )
 
 # Plotting ----
-munro_plot <- munro_df |>
-  ggplot(aes(x = x_coord, y = y_coord)) +
 
+munro_plot <-
+  munro_df |>
+  ggplot(aes(x = x_coord, y = y_coord)) +
   ggfx::as_reference(
     geom_point(
       aes(size = Height_m^2),
@@ -49,7 +51,6 @@ munro_plot <- munro_df |>
     mask = ggfx::ch_alpha("mask_points")
   ) +
   ggiraph::geom_point_interactive(
-    # Your visible points
     aes(
       size = Height_m^2,
       data_id = gsub("'", "", Name),
@@ -65,6 +66,21 @@ munro_plot <- munro_df |>
     colour = "white",
     show.legend = FALSE
   ) +
+  ggtext::geom_textbox(
+    aes(
+      x = x_coord,
+      y = label_y + 10,
+      label = paste0("**", Name, "** - ", janitor::round_half_up(Height_m))
+    ),
+    hjust = 0.5,
+    halign = 0.5,
+    vjust = 0.5, 
+    valign = 1,
+    width = unit(4, "lines"),
+    fill = NA,
+    size = 1.5,
+    family = "Charter",
+    colour = "#222222") +
   labs(
     title = "Onwards and Upwards",
     subtitle = "- The Munros, as classified in 2021 -",
@@ -96,7 +112,7 @@ munro_plot <- munro_df |>
       margin = margin(9, 0, 18, 0),
       colour = "#3e3e3e"
     ),
-    plot.margin = ggplot2::margin(c(36*1.5, rep(36, 3))),
+    plot.margin = ggplot2::margin(c(36 * 1.5, rep(36, 3))),
     plot.background = element_rect(
       colour = "#ffffff",
       fill = "#f8f8f8",
@@ -104,18 +120,20 @@ munro_plot <- munro_df |>
     )
   )
 
-# For the interactive version (the element_marquee caption doesn't render well)
-ggiraph::girafe(
-  ggobj = munro_plot,
-  options = list(
-    ggiraph::opts_tooltip(
-      css = "background-color:#222222;color:#f8f8f8;padding:7.5px;letter-spacing:0.025em;line-height:1.3;border-radius:5px;font-family:Charter"
-    ),
-    ggiraph::opts_hover(css = "")
-  ),
-  height_svg = 10,
-  width_svg = 8
-)
+# # For the interactive version (the element_marquee caption doesn't render well)
+# ggiraph::girafe(
+#   ggobj = munro_plot,
+#   options = list(
+#     ggiraph::opts_tooltip(
+#       css = "background-color:#222222;color:#f8f8f8;padding:7.5px;letter-spacing:0.025em;line-height:1.3;border-radius:5px;font-family:Charter"
+#     ),
+#     ggiraph::opts_hover(css = "")
+#   ),
+#   height_svg = 10,
+#   width_svg = 8
+# )
+
+# Manually arrange for the same number of line breaks across all labels.
 
 # Exporting for Making of
 ggsave(
@@ -130,7 +148,7 @@ ggsave(
   )),
   dpi = 400,
   width = 8,
-  height = 10
+  height = 14
 )
 
 # Final export ----
