@@ -25,6 +25,10 @@ more](https://github.com/rfordatascience/tidytuesday/blob/master/README.md),
 doing](https://twitter.com/hashtag/TidyTuesday?src=hashtag_click), and
 join in - the more the merrier!
 
+## 2026-03 - Pi
+
+<a href='scripts/202603_pi.R' target='_blank'><img src="plots/202603_pi.png" align="center"/></a>
+
 ## 2026-03 - Probabilities
 
 <a href='scripts/202603_probabilities.R' target='_blank'><img src="plots/202603_probabilities.png" align="center"/></a>

@@ -18,6 +18,10 @@ From the organisers:
 
 
 
+## 2026-03 - Pi
+
+<a href='scripts/202603_pi.R' target='_blank'><img src="plots/202603_pi.png" align="center"/></a>
+
 
 ## 2026-03 - Probabilities
 
