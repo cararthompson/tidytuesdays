@@ -49,5 +49,6 @@ ggsave(
   filename = here::here("plots", "202603_pi.png"),
   dpi = 400,
   width = 8,
-  height = 8
+  height = 8,
+  bg = "#ffffff"
 )
